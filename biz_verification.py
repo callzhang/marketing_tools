@@ -9,19 +9,23 @@
 import streamlit as st
 from utils import is_valid_email, send_email_via_mailgun, is_valid_code, get_doc_url
 
-# get doc name from url
+# get doc url from name
+st.set_page_config(page_title="🔓邮箱验证", page_icon="🔓")
+st.title('商务资料下载')
 doc_name = st.experimental_get_query_params().get('doc_name', [''])[0]
 if not doc_name:
     st.error('请使用使用正确的链接')
     st.stop()
-# st.experimental_set_query_params(doc='')
+url = get_doc_url(doc_name)
+if not url:
+    st.error('文件不存在或已过期')
+    st.stop()
 
 # vars
 valid_email = False
 
 
 # body
-st.title('商务资料下载')
 info = st.empty()
 info.info('请使用浏览器打开，不要使用微信打开')
 col1, col2 = st.columns([0.8, 0.2])

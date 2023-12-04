@@ -7,6 +7,7 @@ import requests
 from retry import retry
 import pandas as pd
 import streamlit as st
+from datetime import datetime
 
 sheet_url = st.secrets["doc_sheet_url"]
 
@@ -54,7 +55,13 @@ def get_db():
 
 def get_doc_url(doc_name):
     df = get_db()
-    url = df.loc[doc_name, 'url']
+    try:
+        url = df.loc[doc_name, 'url']
+        exipres = df.loc[doc_name, 'expires']
+    except:
+        return None
+    if datetime.now().date() > exipres:
+        return None
     return url
 
 
