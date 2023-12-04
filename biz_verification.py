@@ -11,7 +11,9 @@ from utils import is_valid_email, send_email_via_mailgun, is_valid_code, get_doc
 
 # get doc name from url
 doc_name = st.experimental_get_query_params().get('doc_name', [''])[0]
-assert doc_name, 'doc name is required'
+if not doc_name:
+    st.error('请使用使用正确的链接')
+    st.stop()
 # st.experimental_set_query_params(doc='')
 
 # vars
