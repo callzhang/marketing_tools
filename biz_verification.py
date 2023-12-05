@@ -49,11 +49,13 @@ if send_code:
         else:
             st.toast(f'验证码发送失败，请稍后重试')
 if verify:
-    if is_valid_code(code, email, doc_name):
+    if not is_valid_code(code, email, doc_name):
+        st.toast('验证码错误，请重新输入')
+    else:
         with st.spinner('正在验证...'):
             url = get_doc_url(doc_name)
         info.success('验证成功，请点击链接进入查看')
         
-        st.markdown(f'**[{doc_name}]({url})**')
-    else:
-        st.toast('验证码错误，请重新输入')
+        # st.markdown(f'**[{doc_name}]({url})**')
+        st.link_button(f':blue[{doc_name}]', url=url)
+        st.markdown(f'如果按钮无法打开，请复制链接到浏览器打开：**{url}**')

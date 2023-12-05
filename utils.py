@@ -72,8 +72,6 @@ def is_valid_email(email):
     if not email_found:
         return False
     email = email_found[0]
-    if email == 'leizhang0121@gmail.com':
-        return True
     # check if email is in company domain
     domain = email.split('@')[1]
     if domain in free_email_domains:
